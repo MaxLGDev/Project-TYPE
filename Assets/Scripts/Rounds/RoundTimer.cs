@@ -9,13 +9,12 @@ public class RoundTimer : MonoBehaviour
     [SerializeField] private float roundDuration = 60f;
     private float timeRemaining;
     private bool timerExpired = false;
+    private bool paused = false;
 
-    private TMP_Text timerText;
+    [SerializeField] private TMP_Text timerText;
 
     private void Start()
     {
-        timerText = GetComponent<TMP_Text>();
-
         if (timerText == null)
         {
             Debug.LogError("No timer text!");
@@ -32,7 +31,7 @@ public class RoundTimer : MonoBehaviour
 
     private void ReduceTimer()
     {
-        if (timerExpired)
+        if (timerExpired || paused)
             return;
 
         timeRemaining = Mathf.Max(0, timeRemaining - Time.deltaTime);
@@ -45,9 +44,15 @@ public class RoundTimer : MonoBehaviour
         }
     }
 
-    private void ResetTimer()
+    public void PauseTimer(bool isPaused)
+    {
+        paused = isPaused;
+    }
+
+    public void ResetTimer()
     {
         timeRemaining = roundDuration;
         timerExpired = false;
+        paused = false;
     }
 }

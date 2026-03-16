@@ -68,6 +68,11 @@ public class TypingInputHandler : MonoBehaviour
         }
     }
 
+    public void SetInputEnabled(bool enabled)
+    {
+        isLocked = !enabled;
+    }
+
     public bool ConsumeWrongKey()
     {
         if (!LastKeyWrong)

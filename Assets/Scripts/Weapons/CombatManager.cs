@@ -39,6 +39,9 @@ public class CombatManager : MonoBehaviour
 
     private void HandleWordCompleted()
     {
+        if (playerID == PlayerID.Player2)
+            return;
+
         WeaponData weapon = playerLoadout.ActiveWeapon;
         targetHealth.TakeDamage(weapon.damagePerShot);
         OnWeaponFired?.Invoke(playerID);

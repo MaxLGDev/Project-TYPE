@@ -32,4 +32,10 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("You died");
         }
     }
+
+    public void ResetHealth()
+    {
+        currentHP = maxHP;
+        OnHealthChanged?.Invoke(currentHP);
+    }
 }
