@@ -14,7 +14,7 @@ public class WeaponData : ScriptableObject
     public int minWordLength;
     public int maxWordLength;
 
-    public int damagePerShot;
+    public float damagePerShot;
     public float fireRateModifier;
 
     public SpecialEffect specialEffect;

@@ -6,9 +6,6 @@ public class TypingInputHandler : MonoBehaviour
 
     public event System.Action OnWordCompleted;
 
-    [SerializeField] private PlayerHealth targetHealth;
-    [SerializeField] private LoadoutManager targetLoadout;
-
     [SerializeField] private float mistypeLockDuration = 0.2f;
 
     public string TypedSoFar => typedSoFar;
@@ -35,7 +32,6 @@ public class TypingInputHandler : MonoBehaviour
     {
         RegisterTyping();
         CheckCompletion();
-
     }
 
     private void RegisterTyping()
@@ -92,6 +88,7 @@ public class TypingInputHandler : MonoBehaviour
             LastKeyWrong = false;
             WordManager.Instance.GetNextWord();
             OnWordCompleted?.Invoke();
+            
         }
     }
 

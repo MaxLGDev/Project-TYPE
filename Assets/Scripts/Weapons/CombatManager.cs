@@ -1,10 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
+public enum PlayerID
+{
+    Player1,
+    Player2
+}
+
 public class CombatManager : MonoBehaviour
 {
+    public event System.Action<PlayerID> OnWeaponFired;
+
     [SerializeField] private PlayerHealth targetHealth;
-    [SerializeField] private LoadoutManager targetLoadout;
+    private LoadoutManager playerLoadout;
+
+    [SerializeField] private PlayerID playerID;
 
     private bool effectOnCooldown = false;
 
@@ -12,18 +22,31 @@ public class CombatManager : MonoBehaviour
 
     private void Start()
     {
-        TypingInputHandler.Instance.OnWordCompleted += HandleWordCompleted;
+        playerLoadout = GetComponent<LoadoutManager>();
+    }
+
+    private void OnEnable()
+    {
+        if (TypingInputHandler.Instance != null)
+            TypingInputHandler.Instance.OnWordCompleted += HandleWordCompleted;
+    }
+
+    private void OnDisable()
+    {
+        if (TypingInputHandler.Instance != null)
+            TypingInputHandler.Instance.OnWordCompleted -= HandleWordCompleted;
     }
 
     private void HandleWordCompleted()
     {
-        WeaponData weapon = targetLoadout.ActiveWeapon;
+        WeaponData weapon = playerLoadout.ActiveWeapon;
         targetHealth.TakeDamage(weapon.damagePerShot);
+        OnWeaponFired?.Invoke(playerID);
 
         if (!effectOnCooldown)
         {
 
-            switch (targetLoadout.ActiveWeapon.specialEffect)
+            switch (playerLoadout.ActiveWeapon.specialEffect)
             {
                 case SpecialEffect.Flicker:
                     EffectManager.Instance.ApplyFlicker();
@@ -55,10 +78,5 @@ public class CombatManager : MonoBehaviour
         }
 
         effectOnCooldown = false;
-    }
-
-    private void OnDestroy()
-    {
-        TypingInputHandler.Instance.OnWordCompleted -= HandleWordCompleted;
     }
 }
