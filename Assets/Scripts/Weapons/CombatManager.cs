@@ -54,7 +54,8 @@ public class CombatManager : MonoBehaviour
             switch (playerLoadout.ActiveWeapon.specialEffect)
             {
                 case SpecialEffect.Flicker:
-                    EffectManager.Instance.ApplyFlicker();
+                    PlayerID opponent = playerID == PlayerID.Player1 ? PlayerID.Player2 : PlayerID.Player1;
+                    EffectManager.Instance.ApplyFlicker(opponent);
                     ApplyEffectCD(weapon.specialEffectCD);
                     break;
                 default:

@@ -6,7 +6,8 @@ public class EffectManager : MonoBehaviour
 {
     public static EffectManager Instance;
 
-    [SerializeField] private TMP_Text wordDisplayText;
+    [SerializeField] private TMP_Text p1DisplayText;
+    [SerializeField] private TMP_Text p2DisplayText;
 
     [Header("Flicker details")]
     [SerializeField] private float flickerTotalDuration = 1.5f;
@@ -26,25 +27,26 @@ public class EffectManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ApplyFlicker()
+    public void ApplyFlicker(PlayerID target)
     {
+        TMP_Text targetText = target == PlayerID.Player1 ? p1DisplayText : p2DisplayText; 
         if(FlickerCO != null)
             StopCoroutine(FlickerCO);
 
-        FlickerCO = StartCoroutine(FlickerRoutine(flickerTotalDuration));
+        FlickerCO = StartCoroutine(FlickerRoutine(flickerTotalDuration, targetText));
     }
 
-    private IEnumerator FlickerRoutine(float duration)
+    private IEnumerator FlickerRoutine(float duration, TMP_Text target)
     {
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            wordDisplayText.enabled = !wordDisplayText.enabled;
+            target.enabled = !target.enabled;
             yield return new WaitForSeconds(singleFlickerDuration);
             elapsed += singleFlickerDuration;
         }
 
-        wordDisplayText.enabled = true;
+        target.enabled = true;
     }
 }
