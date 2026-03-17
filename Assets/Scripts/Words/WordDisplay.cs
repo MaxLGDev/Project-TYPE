@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WordDisplay : MonoBehaviour
 {
+    [SerializeField] private WordManager wordManager;
     [SerializeField] private TMP_Text displayText;
     [SerializeField] private float shakeAmount = 0.1f;
     [SerializeField] private float shakeDuration = 0.3f;
@@ -18,9 +19,19 @@ public class WordDisplay : MonoBehaviour
         originalPos = displayText.transform.localPosition;
     }
 
+    private void OnEnable()
+    {
+        TypingInputHandler.Instance.OntypingReset += ResetDisplay;
+    }
+
+    private void OnDisable()
+    {
+        TypingInputHandler.Instance.OntypingReset -= ResetDisplay;
+    }
+
     private void Update()
     {
-        string current = WordManager.Instance.CurrentWord;
+        string current = wordManager.CurrentWord;
         string typed = TypingInputHandler.Instance.TypedSoFar;
         bool wrong = TypingInputHandler.Instance.ConsumeWrongKey();
 
@@ -85,5 +96,12 @@ public class WordDisplay : MonoBehaviour
         }
         displayText.transform.localPosition = originalPos;
         shakeCO = null;
+    }
+
+    public void ResetDisplay()
+    {
+        lastTyped = "";
+        isWrong = false;
+        displayText.transform.localPosition = originalPos;
     }
 }

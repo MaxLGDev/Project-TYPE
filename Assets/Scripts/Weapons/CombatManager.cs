@@ -17,6 +17,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private PlayerID playerID;
 
     private bool effectOnCooldown = false;
+    [SerializeField] private bool isAI = false;
 
     private Coroutine effectCdCO;
 
@@ -27,21 +28,22 @@ public class CombatManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (TypingInputHandler.Instance != null)
+        if (isAI)
+            GetComponent<AIController>().OnAIWordCompleted += HandleWordCompleted;
+        else if (TypingInputHandler.Instance != null)
             TypingInputHandler.Instance.OnWordCompleted += HandleWordCompleted;
     }
 
     private void OnDisable()
     {
-        if (TypingInputHandler.Instance != null)
+        if (isAI)
+            GetComponent<AIController>().OnAIWordCompleted -= HandleWordCompleted;
+        else if (TypingInputHandler.Instance != null)
             TypingInputHandler.Instance.OnWordCompleted -= HandleWordCompleted;
     }
 
     private void HandleWordCompleted()
     {
-        if (playerID == PlayerID.Player2)
-            return;
-
         WeaponData weapon = playerLoadout.ActiveWeapon;
         targetHealth.TakeDamage(weapon.damagePerShot);
         OnWeaponFired?.Invoke(playerID);

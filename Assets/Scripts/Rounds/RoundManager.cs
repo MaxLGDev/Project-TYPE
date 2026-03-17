@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class RoundManager : MonoBehaviour
 {
@@ -105,6 +106,7 @@ public class RoundManager : MonoBehaviour
         p1Health.ResetHealth();
         p2Health.ResetHealth();
         roundTimer.ResetTimer();
+        TypingInputHandler.Instance.ResetTyping();
     }
 
     public void ResetMatch()

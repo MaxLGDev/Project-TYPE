@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private AIController controller;
+
     [Header("Round Transition")]
     [SerializeField] private GameObject transitionPanel;
     [SerializeField] private TMP_Text roundWinnerText;
@@ -41,6 +43,7 @@ public class UIManager : MonoBehaviour
 
         transitionPanel.SetActive(true);
         TypingInputHandler.Instance.SetInputEnabled(false);
+        controller.SetAIPaused(false);
 
         if (transitionCO != null)
             StopCoroutine(transitionCO);
@@ -56,6 +59,7 @@ public class UIManager : MonoBehaviour
 
         matchEndedPanel.SetActive(true);
         TypingInputHandler.Instance.SetInputEnabled(false);
+        controller.SetAIPaused(false);
     }
 
     [ContextMenu("Reset Match")]
@@ -73,6 +77,7 @@ public class UIManager : MonoBehaviour
         if (!RoundManager.Instance.IsMatchEnded)
         {
             TypingInputHandler.Instance.SetInputEnabled(true);
+            controller.SetAIPaused(true);
             RoundManager.Instance.StartNextRound();
         }
     }

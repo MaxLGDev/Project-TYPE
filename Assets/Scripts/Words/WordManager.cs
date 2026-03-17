@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class WordManager : MonoBehaviour
 {
-    public static WordManager Instance { get; private set; }
-
     [Header("Words List")]
     [SerializeField] private WordLoader wordLoader;
     private string targetWord;
@@ -12,21 +10,6 @@ public class WordManager : MonoBehaviour
     [SerializeField] private int maxLength;
 
     public string CurrentWord => targetWord;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Debug.Log("There are 2 word managers active!!!");
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        GetNextWord();
-    }
 
     public void GetNextWord()
     {
@@ -43,7 +26,6 @@ public class WordManager : MonoBehaviour
             wordRerollAttempt++;
             if(wordRerollAttempt > 100)
             {
-                Debug.Log($"returning: 100 attempts failed, min:{minLength} max:{maxLength} last word tried:'{newWord}'");
                 return;
             }
 

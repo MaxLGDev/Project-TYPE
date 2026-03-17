@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: PeaShooter
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   WeaponName: PeaShooter
-  minWordLength: 3
-  maxWordLength: 4
+  minWordLength: 2
+  maxWordLength: 5
   damagePerShot: 5
   fireRateModifier: 1
-  specialEffect: None
+  specialEffect: 0
+  specialEffectCD: 0

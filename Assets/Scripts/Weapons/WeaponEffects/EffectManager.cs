@@ -18,7 +18,6 @@ public class EffectManager : MonoBehaviour
     {
         if(Instance != null &&  Instance != this)
         {
-            Debug.Log("2 effect managers!!");
             Destroy(gameObject);
             return;
         }

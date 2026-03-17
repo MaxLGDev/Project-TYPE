@@ -5,7 +5,9 @@ public class TypingInputHandler : MonoBehaviour
     public static TypingInputHandler Instance { get; private set; }
 
     public event System.Action OnWordCompleted;
+    public event System.Action OntypingReset;
 
+    [SerializeField] private WordManager wordManager;
     [SerializeField] private float mistypeLockDuration = 0.2f;
 
     public string TypedSoFar => typedSoFar;
@@ -19,13 +21,22 @@ public class TypingInputHandler : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Debug.Log("2 input handlers!!");
             Destroy(gameObject);
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Update()
@@ -50,7 +61,7 @@ public class TypingInputHandler : MonoBehaviour
             else if (char.IsLetter(typedChar) && typedChar <= 'z' && typedChar >= 'a')
             {
                 char lowerCase = char.ToLower(typedChar);
-                string current = WordManager.Instance.CurrentWord;
+                string current = wordManager.CurrentWord;
                 if (typedSoFar.Length < current.Length && lowerCase == current[typedSoFar.Length])
                 {
                     typedSoFar += lowerCase;
@@ -87,11 +98,11 @@ public class TypingInputHandler : MonoBehaviour
         if (string.IsNullOrEmpty(typedSoFar))
             return;
 
-        if (typedSoFar == WordManager.Instance.CurrentWord)
+        if (typedSoFar == wordManager.CurrentWord)
         {
             typedSoFar = "";
             LastKeyWrong = false;
-            WordManager.Instance.GetNextWord();
+            wordManager.GetNextWord();
             OnWordCompleted?.Invoke();
             
         }
@@ -100,6 +111,7 @@ public class TypingInputHandler : MonoBehaviour
     public void ResetTyping()
     {
         typedSoFar = "";
+        OntypingReset?.Invoke();
     }
 
     private IEnumerator LockInputPenalty()
@@ -114,5 +126,13 @@ public class TypingInputHandler : MonoBehaviour
         }
 
         isLocked = false;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        isLocked = false;
+        typedSoFar = "";
+        LastKeyWrong = false;
+        wordManager = GameObject.FindWithTag("PlayerWordManager").GetComponent<WordManager>();
     }
 }

@@ -3,13 +3,29 @@ using UnityEngine.InputSystem;
 
 public class LoadoutManager : MonoBehaviour
 {
+    [SerializeField] private WordManager wordManager;
+
     public WeaponData[] equippedWeapons = new WeaponData[3];
     private int activeSlot = 0;
 
+    [SerializeField] private bool isAI = false;
+
     public WeaponData ActiveWeapon => equippedWeapons[activeSlot];
+
+    private void Start()
+    {
+        if (equippedWeapons[0] != null)
+        {
+            wordManager.UpdateWordFilter(equippedWeapons[0].minWordLength, equippedWeapons[0].maxWordLength);
+            wordManager.GetNextWord(); // first word called here, filter already set
+        }
+    }
 
     private void Update()
     {
+        if (isAI)
+            return;
+
         if (Keyboard.current.digit1Key.wasPressedThisFrame) SwitchToSlot(0);
         if (Keyboard.current.digit2Key.wasPressedThisFrame) SwitchToSlot(1);
         if (Keyboard.current.digit3Key.wasPressedThisFrame) SwitchToSlot(2);
@@ -23,13 +39,13 @@ public class LoadoutManager : MonoBehaviour
 
         activeSlot = slot;
 
-        if (WordManager.Instance != null)
+        if (wordManager != null)
         {
-            WordManager.Instance.UpdateWordFilter(equippedWeapons[activeSlot].minWordLength, equippedWeapons[activeSlot].maxWordLength);
-            WordManager.Instance.GetNextWord();
+            wordManager.UpdateWordFilter(equippedWeapons[activeSlot].minWordLength, equippedWeapons[activeSlot].maxWordLength);
+            wordManager.GetNextWord();
         }
 
-        if(TypingInputHandler.Instance != null)
+        if (TypingInputHandler.Instance != null)
             TypingInputHandler.Instance.ResetTyping();
     }
 

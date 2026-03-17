@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlickerGun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   WeaponName: FlickerGun
-  minWordLength: 7
+  minWordLength: 6
   maxWordLength: 9
   damagePerShot: 20
   fireRateModifier: 1
