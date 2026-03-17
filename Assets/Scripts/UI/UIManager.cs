@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private AIController controller;
-
     [Header("Round Transition")]
     [SerializeField] private GameObject transitionPanel;
     [SerializeField] private TMP_Text roundWinnerText;
@@ -25,14 +23,38 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        RoundManager.Instance.OnRoundEnded += HandleRoundTransition;
-        RoundManager.Instance.OnMatchEnded += HandleMatchEnd;
+        if (RoundManager.Instance != null)
+        {
+            Debug.Log("UIManager subscribed to RoundManager");
+            RoundManager.Instance.OnRoundEnded += HandleRoundTransition;
+            RoundManager.Instance.OnMatchEnded += HandleMatchEnd;
+        }
+        else
+            Debug.LogError("RoundManager not found in UIManager OnEnable!");
+
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnStateChanged += HandleStateChanged;
     }
 
     private void OnDisable()
     {
-        RoundManager.Instance.OnRoundEnded -= HandleRoundTransition;
-        RoundManager.Instance.OnMatchEnded -= HandleMatchEnd;
+        if (RoundManager.Instance != null)
+        {
+            RoundManager.Instance.OnRoundEnded -= HandleRoundTransition;
+            RoundManager.Instance.OnMatchEnded -= HandleMatchEnd;
+        }
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnStateChanged -= HandleStateChanged;
+    }
+
+    private void HandleStateChanged(GameState state)
+    {
+        if(state == GameState.InMatch)
+        {
+            transitionPanel.SetActive(false);
+            matchEndedPanel.SetActive(false);
+            UpdateRoundScore();
+        }
     }
 
     private void HandleRoundTransition(PlayerID winner)
@@ -42,8 +64,6 @@ public class UIManager : MonoBehaviour
         ShowRoundHP();
 
         transitionPanel.SetActive(true);
-        TypingInputHandler.Instance.SetInputEnabled(false);
-        controller.SetAIPaused(false);
 
         if (transitionCO != null)
             StopCoroutine(transitionCO);
@@ -58,27 +78,17 @@ public class UIManager : MonoBehaviour
         ShowMatchHP();
 
         matchEndedPanel.SetActive(true);
-        TypingInputHandler.Instance.SetInputEnabled(false);
-        controller.SetAIPaused(false);
-    }
-
-    [ContextMenu("Reset Match")]
-    private void ResetMatch()
-    {
-        RoundManager.Instance.ResetMatch();
-        UpdateRoundScore();
     }
 
     private IEnumerator DelayBeforeNextRound()
     {
         yield return new WaitForSeconds(delayDuration);
-        transitionPanel.SetActive(false);
+        Debug.Log("Delay finished");
 
-        if (!RoundManager.Instance.IsMatchEnded)
+        if (GameManager.Instance.CurrentGameState != GameState.MatchOver)
         {
-            TypingInputHandler.Instance.SetInputEnabled(true);
-            controller.SetAIPaused(true);
             RoundManager.Instance.StartNextRound();
+            GameManager.Instance.SetState(GameState.InMatch);
         }
     }
 

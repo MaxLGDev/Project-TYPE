@@ -62,6 +62,12 @@ public class AIController : MonoBehaviour
     {
         while (true)
         {
+            if (GameManager.Instance.CurrentGameState != GameState.InMatch)
+            {
+                yield return null;
+                continue;
+            }
+
             string word = wordManager.CurrentWord;
             aiTypedSoFar = "";
 
@@ -73,14 +79,13 @@ public class AIController : MonoBehaviour
             OnAIWordCompleted?.Invoke();
             wordManager.GetNextWord();
         }
-        
     }
 
     public void SetAIPaused(bool active)
     {
         if (active)
             typeWordCO = StartCoroutine(TypeCurrentWordCO());
-        else if(typeWordCO != null)
+        else if (typeWordCO != null)
             StopCoroutine(typeWordCO);
     }
 }

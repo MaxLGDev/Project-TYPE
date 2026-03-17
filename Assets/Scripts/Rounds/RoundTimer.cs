@@ -9,7 +9,6 @@ public class RoundTimer : MonoBehaviour
     [SerializeField] private float roundDuration = 60f;
     private float timeRemaining;
     private bool timerExpired = false;
-    private bool paused = false;
 
     [SerializeField] private TMP_Text timerText;
 
@@ -31,7 +30,7 @@ public class RoundTimer : MonoBehaviour
 
     private void ReduceTimer()
     {
-        if (timerExpired || paused)
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch || timerExpired)
             return;
 
         timeRemaining = Mathf.Max(0, timeRemaining - Time.deltaTime);
@@ -44,15 +43,9 @@ public class RoundTimer : MonoBehaviour
         }
     }
 
-    public void PauseTimer(bool isPaused)
-    {
-        paused = isPaused;
-    }
-
     public void ResetTimer()
     {
         timeRemaining = roundDuration;
         timerExpired = false;
-        paused = false;
     }
 }

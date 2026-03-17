@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+
 public class TypingInputHandler : MonoBehaviour
 {
     public static TypingInputHandler Instance { get; private set; }
@@ -8,14 +9,14 @@ public class TypingInputHandler : MonoBehaviour
     public event System.Action OntypingReset;
 
     [SerializeField] private WordManager wordManager;
-    [SerializeField] private float mistypeLockDuration = 0.2f;
+    [SerializeField] private float mistypeLockDuration = 0.3f;
 
     public string TypedSoFar => typedSoFar;
     private string typedSoFar;
     public bool LastKeyWrong;
+    private bool isLocked;
 
     private Coroutine mistypeCO;
-    private bool isLocked;
 
     private void Awake()
     {
@@ -47,6 +48,9 @@ public class TypingInputHandler : MonoBehaviour
 
     private void RegisterTyping()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch)
+            return;
+
         if (isLocked)
             return;
 
@@ -79,11 +83,6 @@ public class TypingInputHandler : MonoBehaviour
         }
     }
 
-    public void SetInputEnabled(bool enabled)
-    {
-        isLocked = !enabled;
-    }
-
     public bool ConsumeWrongKey()
     {
         if (!LastKeyWrong)
@@ -95,6 +94,9 @@ public class TypingInputHandler : MonoBehaviour
 
     private void CheckCompletion()
     {
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch)
+            return;
+
         if (string.IsNullOrEmpty(typedSoFar))
             return;
 
@@ -117,6 +119,7 @@ public class TypingInputHandler : MonoBehaviour
     private IEnumerator LockInputPenalty()
     {
         isLocked = true;
+        
         float elapsed = 0f;
 
         while (elapsed < mistypeLockDuration)
@@ -130,7 +133,6 @@ public class TypingInputHandler : MonoBehaviour
 
     private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
     {
-        isLocked = false;
         typedSoFar = "";
         LastKeyWrong = false;
         wordManager = GameObject.FindWithTag("PlayerWordManager").GetComponent<WordManager>();

@@ -28,10 +28,6 @@ public class RoundManager : MonoBehaviour
     private int roundCount = 1;
     public int RoundCount => roundCount;
 
-    private bool roundEnded = false;
-    private bool matchEnded = false;
-    public bool IsMatchEnded => matchEnded;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -82,10 +78,8 @@ public class RoundManager : MonoBehaviour
 
     private void EndRound(PlayerID winner)
     {
-        if (roundEnded)
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch)
             return;
-        roundEnded = true;
-        roundTimer.PauseTimer(true);
 
         if (winner == PlayerID.Player1)
             p1RoundWins++;
@@ -95,13 +89,14 @@ public class RoundManager : MonoBehaviour
         if (p1RoundWins >= 3 || p2RoundWins >= 3)
             EndMatch(winner);
         else
+        {
             OnRoundEnded?.Invoke(winner);
+        }
     }
 
     public void StartNextRound()
     {
         roundCount++;
-        roundEnded = false;
         firstToFire = null;
         p1Health.ResetHealth();
         p2Health.ResetHealth();
@@ -114,18 +109,14 @@ public class RoundManager : MonoBehaviour
         roundCount = 1;
         p1RoundWins = 0;
         p2RoundWins = 0;
-        matchEnded = false;
         StartNextRound();
+        GameManager.Instance.SetState(GameState.InMatch);
     }
 
     private void EndMatch(PlayerID winner)
     {
-        if (matchEnded)
-            return;
-
-        matchEnded = true;
-
-        OnMatchEnded?.Invoke(winner);
+        if (GameManager.Instance.CurrentGameState == GameState.InMatch)
+            OnMatchEnded?.Invoke(winner);
     }
 
     private void HandleTimerExpired()

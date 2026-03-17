@@ -26,6 +26,9 @@ public class LoadoutManager : MonoBehaviour
         if (isAI)
             return;
 
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch)
+            return;
+
         if (Keyboard.current.digit1Key.wasPressedThisFrame) SwitchToSlot(0);
         if (Keyboard.current.digit2Key.wasPressedThisFrame) SwitchToSlot(1);
         if (Keyboard.current.digit3Key.wasPressedThisFrame) SwitchToSlot(2);
