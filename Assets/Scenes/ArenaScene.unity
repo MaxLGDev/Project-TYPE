@@ -2275,9 +2275,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317487527}
+  - component: {fileID: 1317487531}
   - component: {fileID: 1317487529}
   - component: {fileID: 1317487528}
-  - component: {fileID: 1317487530}
   m_Layer: 5
   m_Name: MatchEndTransition
   m_TagString: Untagged
@@ -2347,7 +2347,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317487526}
   m_CullTransparentMesh: 1
---- !u!114 &1317487530
+--- !u!114 &1317487531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2356,9 +2356,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1317487526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 977a470ffba83ce4e98f35807ef95a30, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8d0d9d4488823478b4db266bd61abc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  m_EditorClassIdentifier: Assembly-CSharp::DebugDestroy
 --- !u!1 &1318560062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4093,6 +4093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2029078749}
+  - component: {fileID: 2029078753}
   - component: {fileID: 2029078752}
   - component: {fileID: 2029078751}
   - component: {fileID: 2029078750}
@@ -4167,9 +4168,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1317487530}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: ReloadScene
+      - m_Target: {fileID: 2029078753}
+        m_TargetAssemblyTypeName: MatchStarter, Assembly-CSharp
+        m_MethodName: StartMatch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4217,6 +4218,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029078748}
   m_CullTransparentMesh: 1
+--- !u!114 &2029078753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029078748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0325a2c382c274b9dfcff69a1bb58a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchStarter
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

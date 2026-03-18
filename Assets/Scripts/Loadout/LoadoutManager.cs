@@ -14,10 +14,32 @@ public class LoadoutManager : MonoBehaviour
 
     private void Start()
     {
+        AssignPlayerLoadout();
+        
         if (equippedWeapons[0] != null)
         {
             wordManager.UpdateWordFilter(equippedWeapons[0].minWordLength, equippedWeapons[0].maxWordLength);
             wordManager.GetNextWord(); // first word called here, filter already set
+        }
+    }
+
+    private void AssignPlayerLoadout()
+    {
+        if (isAI)
+        {
+            if (GameManager.Instance.P2SelectedWeapons != null)
+            {
+                for (int i = 0; i < equippedWeapons.Length; i++)
+                    equippedWeapons[i] = GameManager.Instance.P2SelectedWeapons[i];
+            }
+        }
+        else
+        {
+            if (GameManager.Instance.P1SelectedWeapons != null)
+            {
+                for (int i = 0; i < equippedWeapons.Length; i++)
+                    equippedWeapons[i] = GameManager.Instance.P1SelectedWeapons[i];
+            }
         }
     }
 

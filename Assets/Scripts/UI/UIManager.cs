@@ -49,7 +49,6 @@ public class UIManager : MonoBehaviour
 
     private void HandleStateChanged(GameState state)
     {
-        Debug.Log($"UIManager HandleStateChanged: {state}");
         if (state == GameState.InMatch)
         {
             transitionPanel.SetActive(false);
@@ -84,8 +83,9 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator DelayBeforeNextRound()
     {
+        Debug.Log("Delay started");
         yield return new WaitForSeconds(delayDuration);
-        Debug.Log("Delay finished");
+        Debug.Log($"Delay finished, state: {GameManager.Instance.CurrentGameState}");
 
         if (GameManager.Instance.CurrentGameState != GameState.MatchOver)
         {
