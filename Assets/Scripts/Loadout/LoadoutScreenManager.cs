@@ -9,13 +9,17 @@ public class LoadoutScreenManager : MonoBehaviour
     [SerializeField] private TMP_Text readyText;
     [SerializeField] private LoadoutTimer loadoutTimer;
     [SerializeField] private WeaponList weaponList;
+    [SerializeField] private PowerList powerList;
 
     [SerializeField] private WeaponData aiDefaultWeapon;
 
     private WeaponData[] p1Weapons = new WeaponData[3];
+    [SerializeField] private PowerData[] availablePowers;
 
-    [SerializeField] private WeaponSlotUI[] p1Slots;
-    [SerializeField] private WeaponSlotUI[] p2Slots;
+    [SerializeField] private LoadoutWeaponSlotUI[] p1WeaponSlots;
+    [SerializeField] private LoadoutPowerSlotUI p1PowerSlot;
+    [SerializeField] private LoadoutWeaponSlotUI[] p2WeaponSlots;
+    [SerializeField] private LoadoutPowerSlotUI p2PowerSlot;
 
     [Header("Phases Panels")]
     [SerializeField] private GameObject weaponsListPanel;
@@ -51,6 +55,7 @@ public class LoadoutScreenManager : MonoBehaviour
 
         // TODO: REPLACE WITH ACTUAL AI LOADOUT FROM DIFFICULTY SETTINGS
         GameManager.Instance.SetP2Loadout(new WeaponData[] {aiDefaultWeapon, aiDefaultWeapon, aiDefaultWeapon});
+        GameManager.Instance.SetP2Power(null);
     }
 
     private void OnEnable()
@@ -78,11 +83,16 @@ public class LoadoutScreenManager : MonoBehaviour
             p2Locked= true;
             UpdateLockButton();
 
-            GameManager.Instance.SetState(GameState.LoadoutSpecials);
+            GameManager.Instance.SetState(GameState.LoadoutPowers);
             weaponsListPanel.SetActive(false);
             powersListPanel.SetActive(true);
+
+            for (int i = 0; i < 3; i++)
+            {
+                p2WeaponSlots[i].SetWeapon(GameManager.Instance.P2SelectedWeapons[i]);
+            }
         }
-        else if (GameManager.Instance.CurrentGameState == GameState.LoadoutSpecials && BothPlayersReady())
+        else if (GameManager.Instance.CurrentGameState == GameState.LoadoutPowers && BothPlayersReady())
         {
             p1Locked = false;
             p2Locked = true;
@@ -96,18 +106,18 @@ public class LoadoutScreenManager : MonoBehaviour
         {
             GameManager.Instance.StartMatch();
         }
-
-        for (int i = 0; i < 3; i++)
-        {
-            p2Slots[i].SetWeapon(GameManager.Instance.P2SelectedWeapons[i]);
-        }
     }
 
     public void OnLockClicked()
     {
         p1Locked = true;
         UpdateLockButton();
-        LockP1Selection();
+
+        if (GameManager.Instance.CurrentGameState == GameState.LoadoutWeapons)
+            LockP1WeaponSelection();
+        else if (GameManager.Instance.CurrentGameState == GameState.LoadoutPowers)
+            LockP1PowerSelection();
+
         HandleNextPhase();
     }
 
@@ -118,7 +128,7 @@ public class LoadoutScreenManager : MonoBehaviour
             if (p1Weapons[i] == null)
             {
                 p1Weapons[i] = data;
-                p1Slots[i].SetWeapon(data);
+                p1WeaponSlots[i].SetWeapon(data);
                 break;
             }
         }
@@ -126,11 +136,16 @@ public class LoadoutScreenManager : MonoBehaviour
         UpdateLockButton();
     }
 
-    private void LockP1Selection()
+    public void OnPowerSelected(PowerData data)
     {
-        p1Locked = true;
+        GameManager.Instance.SetP1Power(data);
+        p1PowerSlot.SetPower(data);
+        UpdateLockButton();
+    }
 
-        foreach (WeaponSlotUI slot in p1Slots)
+    private void LockP1WeaponSelection()
+    {
+        foreach (LoadoutWeaponSlotUI slot in p1WeaponSlots)
             slot.SetLocked(true);
 
         lockButton.interactable = false;
@@ -138,12 +153,25 @@ public class LoadoutScreenManager : MonoBehaviour
         GameManager.Instance.SetP1Loadout(p1Weapons);
     }
 
-    public void ClearSlot(int index)
+    private void LockP1PowerSelection()
+    {
+        powerList.LockPowerCards(true);
+        p1PowerSlot.SetLocked(true);
+        GameManager.Instance.SetP1Power(GameManager.Instance.P1SelectedPower);
+    }
+
+    public void ClearWeaponSlot(int index)
     {
         p1Weapons[index] = null;
-        p1Slots[index].ClearSlot();
+        p1WeaponSlots[index].ClearSlot();
 
         UpdateLockButton();
+    }
+
+    public void ClearPowerSlot()
+    {
+        GameManager.Instance.SetP1Power(null);
+        p1PowerSlot.ClearSlot();
     }
 
     private void UpdateLockButton()
@@ -156,7 +184,11 @@ public class LoadoutScreenManager : MonoBehaviour
 
     private bool CanLock()
     {
-        for(int i = 0; i < p1Weapons.Length;i++)
+        if (GameManager.Instance.CurrentGameState == GameState.LoadoutPowers ||
+            GameManager.Instance.CurrentGameState == GameState.LoadoutMap)
+            return true;
+
+        for (int i = 0; i < p1Weapons.Length;i++)
         {
             if (p1Weapons[i] == null)
                 return false;

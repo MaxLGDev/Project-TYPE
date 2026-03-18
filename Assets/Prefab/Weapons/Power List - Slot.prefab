@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6144919098864302322}
-  - component: {fileID: 4488957248301246048}
+  - component: {fileID: 4929921821352878041}
   - component: {fileID: 366567722244984767}
   - component: {fileID: 6501165900695876140}
   - component: {fileID: 2235515146196645318}
   m_Layer: 5
-  m_Name: Loadout List - Slot
+  m_Name: Power List - Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4488957248301246048
+--- !u!114 &4929921821352878041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,10 +49,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5352069840222721111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61e7fc9a231ab504fb074520c456e84d, type: 3}
+  m_Script: {fileID: 11500000, guid: 88a5cd82a037f12499efc76db3b517bf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponCard
-  weaponName: {fileID: 8911086205854689323}
+  m_EditorClassIdentifier: Assembly-CSharp::PowerCard
+  powerName: {fileID: 8911086205854689323}
   cardButton: {fileID: 2235515146196645318}
 --- !u!222 &366567722244984767
 CanvasRenderer:
@@ -136,8 +136,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4488957248301246048}
-        m_TargetAssemblyTypeName: WeaponCard, Assembly-CSharp
+      - m_Target: {fileID: 4929921821352878041}
+        m_TargetAssemblyTypeName: PowerCard, Assembly-CSharp
         m_MethodName: OnCardClicked
         m_Mode: 1
         m_Arguments:
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 6803617807864517016}
   - component: {fileID: 8911086205854689323}
   m_Layer: 5
-  m_Name: WeaponNameText
+  m_Name: PowerNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

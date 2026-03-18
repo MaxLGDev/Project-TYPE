@@ -13,6 +13,7 @@ public class RoundManager : MonoBehaviour
     [Header("Player 1 Details")]
     [SerializeField] private PlayerHealth p1Health;
     [SerializeField] private CombatManager p1Combat;
+    [SerializeField] private PowerManager p1Power;
     private int p1RoundWins = 0;
     public int P1RoundWins => p1RoundWins;
     public float P1CurrentHP => p1Health.CurrentHP;
@@ -20,6 +21,7 @@ public class RoundManager : MonoBehaviour
     [Header("Player 2 Details")]
     [SerializeField] private PlayerHealth p2Health;
     [SerializeField] private CombatManager p2Combat;
+    [SerializeField] private PowerManager p2Power;
     private int p2RoundWins = 0;
     public int P2RoundWins => p2RoundWins;
     public float P2CurrentHP => p2Health.CurrentHP;
@@ -99,8 +101,13 @@ public class RoundManager : MonoBehaviour
         roundCount++;
         firstToFire = null;
         p1Health.ResetHealth();
+        p1Power.ResetPower();
+
         p2Health.ResetHealth();
+        p2Power.ResetPower();
+
         roundTimer.ResetTimer();
+        
         TypingInputHandler.Instance.ResetTyping();
     }
 

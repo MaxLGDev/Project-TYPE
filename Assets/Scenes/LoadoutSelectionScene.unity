@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 79793230}
   - component: {fileID: 79793229}
   m_Layer: 5
-  m_Name: Slot3Text (1)
+  m_Name: PowerSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 195177600}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
   slotIndex: 0
@@ -1812,9 +1812,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 386623132}
+  - component: {fileID: 386623137}
   - component: {fileID: 386623134}
   - component: {fileID: 386623133}
   - component: {fileID: 386623135}
+  - component: {fileID: 386623136}
   m_Layer: 5
   m_Name: SpecialSlot
   m_TagString: Untagged
@@ -1900,6 +1902,76 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &386623136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386623131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 386623133}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 386623137}
+        m_TargetAssemblyTypeName: LoadoutPowerSlotUI, Assembly-CSharp
+        m_MethodName: OnSlotClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &386623137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386623131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c94de2e58966f4795fb65eb32998ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadoutPowerSlotUI
+  powerName: {fileID: 79793229}
+  slotButton: {fileID: 386623136}
 --- !u!1 &406694884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2551,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 532681616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
   slotIndex: 1
@@ -2704,6 +2776,7 @@ GameObject:
   - component: {fileID: 594737022}
   - component: {fileID: 594737021}
   - component: {fileID: 594737023}
+  - component: {fileID: 594737024}
   m_Layer: 0
   m_Name: LoadoutScreenManager
   m_TagString: Untagged
@@ -2726,15 +2799,20 @@ MonoBehaviour:
   readyText: {fileID: 1683522021}
   loadoutTimer: {fileID: 829052661}
   weaponList: {fileID: 594737023}
+  powerList: {fileID: 594737024}
   aiDefaultWeapon: {fileID: 11400000, guid: 2c81d40ae34f29f43bdd3ad099b4e46e, type: 2}
-  p1Slots:
+  availablePowers:
+  - {fileID: 11400000, guid: 36c908a95a62af145ab20cfa3213b7a0, type: 2}
+  p1WeaponSlots:
   - {fileID: 1322755474}
-  - {fileID: 879124491}
+  - {fileID: 879124493}
   - {fileID: 1891538860}
-  p2Slots:
+  p1PowerSlot: {fileID: 386623137}
+  p2WeaponSlots:
   - {fileID: 195177604}
   - {fileID: 532681620}
   - {fileID: 1678621911}
+  p2PowerSlot: {fileID: 1209779629}
   weaponsListPanel: {fileID: 1239844184}
   powersListPanel: {fileID: 224054531}
   mapListPanel: {fileID: 97235800}
@@ -2772,6 +2850,21 @@ MonoBehaviour:
   weaponDB: {fileID: 11400000, guid: ba6024d1057f5814e8d51d012ed85a45, type: 2}
   weaponCardPrefab: {fileID: 5352069840222721111, guid: 41671813c50d6bc43a194453d77a3cbd, type: 3}
   gridParent: {fileID: 805394785}
+--- !u!114 &594737024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594737020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dc76071f4b4d9246985abf7739319b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PowerList
+  powerDB: {fileID: 11400000, guid: 3b541b51f5c2c8d45a89aa476fce4519, type: 2}
+  powerCardPrefab: {fileID: 5352069840222721111, guid: c41eff8e542bde449bbff7384ca438eb, type: 3}
+  gridParent: {fileID: 1314429367}
 --- !u!1 &617679106
 GameObject:
   m_ObjectHideFlags: 0
@@ -3766,7 +3859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 879124488}
-  - component: {fileID: 879124491}
+  - component: {fileID: 879124493}
   - component: {fileID: 879124490}
   - component: {fileID: 879124489}
   - component: {fileID: 879124492}
@@ -3835,21 +3928,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879124487}
   m_CullTransparentMesh: 1
---- !u!114 &879124491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879124487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
-  slotIndex: 1
-  weaponName: {fileID: 2014707234}
-  slotButton: {fileID: 879124492}
 --- !u!114 &879124492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3894,8 +3972,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 879124491}
-        m_TargetAssemblyTypeName: WeaponSlotUI, Assembly-CSharp
+      - m_Target: {fileID: 879124493}
+        m_TargetAssemblyTypeName: LoadoutWeaponSlotUI, Assembly-CSharp
         m_MethodName: OnSlotClicked
         m_Mode: 1
         m_Arguments:
@@ -3906,6 +3984,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &879124493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879124487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadoutWeaponSlotUI
+  slotIndex: 1
+  weaponName: {fileID: 2014707234}
+  slotButton: {fileID: 879124492}
 --- !u!1 &880786700
 GameObject:
   m_ObjectHideFlags: 0
@@ -4632,9 +4725,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1209779624}
+  - component: {fileID: 1209779629}
   - component: {fileID: 1209779626}
   - component: {fileID: 1209779625}
   - component: {fileID: 1209779627}
+  - component: {fileID: 1209779628}
   m_Layer: 5
   m_Name: SpecialSlot
   m_TagString: Untagged
@@ -4720,6 +4815,76 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1209779628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209779623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1209779625}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1209779629}
+        m_TargetAssemblyTypeName: LoadoutPowerSlotUI, Assembly-CSharp
+        m_MethodName: OnSlotClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1209779629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209779623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c94de2e58966f4795fb65eb32998ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadoutPowerSlotUI
+  powerName: {fileID: 965378383}
+  slotButton: {fileID: 1209779628}
 --- !u!1 &1239844184
 GameObject:
   m_ObjectHideFlags: 0
@@ -5218,7 +5383,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1322755470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
   slotIndex: 0
@@ -5905,7 +6070,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1678621907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
   slotIndex: 2
@@ -6488,7 +6653,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1891538856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be5d358eb3d7c104180b02abdf741bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 903f5422b43dc634ea21e4af004ccf0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponSlotUI
   slotIndex: 2

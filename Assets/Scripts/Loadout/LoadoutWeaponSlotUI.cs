@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WeaponSlotUI : MonoBehaviour
+public class LoadoutWeaponSlotUI : MonoBehaviour
 {
     [SerializeField] private int slotIndex;
     [SerializeField] private TMP_Text weaponName;
@@ -51,6 +51,6 @@ public class WeaponSlotUI : MonoBehaviour
         if (currentWeapon == null)
             return;
 
-        LoadoutScreenManager.Instance.ClearSlot(slotIndex);
+        LoadoutScreenManager.Instance.ClearWeaponSlot(slotIndex);
     }
 }

@@ -44,7 +44,7 @@ public class LoadoutTimer : MonoBehaviour
 
     private void HandlePhaseChanged(GameState state)
     {
-        if(state == GameState.LoadoutWeapons || state == GameState.LoadoutSpecials || state == GameState.LoadoutMap)
+        if(state == GameState.LoadoutWeapons || state == GameState.LoadoutPowers || state == GameState.LoadoutMap)
             ResetTimer();
     }
 
@@ -54,7 +54,7 @@ public class LoadoutTimer : MonoBehaviour
             return;
 
         if (GameManager.Instance.CurrentGameState != GameState.LoadoutWeapons &&
-            GameManager.Instance.CurrentGameState != GameState.LoadoutSpecials &&
+            GameManager.Instance.CurrentGameState != GameState.LoadoutPowers &&
             GameManager.Instance.CurrentGameState != GameState.LoadoutMap)
             return;
 
@@ -74,7 +74,7 @@ public class LoadoutTimer : MonoBehaviour
         return GameManager.Instance.CurrentGameState switch
         {
             GameState.LoadoutWeapons => "WEAPONS",
-            GameState.LoadoutSpecials => "SPECIALS",
+            GameState.LoadoutPowers => "SPECIALS",
             GameState.LoadoutMap => "MAP",
             _ => ""
         };
@@ -83,7 +83,7 @@ public class LoadoutTimer : MonoBehaviour
     private float GetTimerDuration() => currentState switch
     {
         GameState.LoadoutWeapons => weaponPhaseDuration,
-        GameState.LoadoutSpecials => powerPhaseDuration,
+        GameState.LoadoutPowers => powerPhaseDuration,
         GameState.LoadoutMap => mapPhaseDuration,
         _ => 0f
     };

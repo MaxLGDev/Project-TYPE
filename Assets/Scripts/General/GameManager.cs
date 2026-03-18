@@ -5,7 +5,7 @@ public enum GameState
 {
     MainMenu,
     LoadoutWeapons,
-    LoadoutSpecials,
+    LoadoutPowers,
     LoadoutMap,
     PreMatch,
     InMatch,
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CombatManager p1Combat;
     public CombatManager P1Combat => p1Combat;
     public WeaponData[] P1SelectedWeapons { get; private set; }
+    public PowerData P1SelectedPower { get; private set; }
 
     [Header("<color=white><size=20>Player 2</size></color>")]
     [SerializeField] private AIController aiController;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CombatManager p2Combat;
     public CombatManager P2Combat => p2Combat;
     public WeaponData[] P2SelectedWeapons { get; private set; }
+    public PowerData P2SelectedPower { get; private set; }
 
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty = AIDifficulty.Easy;
@@ -100,9 +102,19 @@ public class GameManager : MonoBehaviour
         P1SelectedWeapons = loadout;
     }
 
+    public void SetP1Power(PowerData power)
+    {
+        P1SelectedPower = power;
+    }
+
     public void SetP2Loadout(WeaponData[] loadout)
     {
         P2SelectedWeapons = loadout;
+    }
+
+    public void SetP2Power(PowerData power)
+    {
+        P2SelectedPower = power;
     }
 
     public void SetState(GameState state)

@@ -33,6 +33,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void Heal(float amount)
+    {
+        if (currentHP >= maxHP)
+            return;
+
+        currentHP += amount;
+        currentHP = Mathf.Min(currentHP, maxHP);
+        OnHealthChanged?.Invoke(currentHP);
+    }
+
     public void ResetHealth()
     {
         currentHP = maxHP;
