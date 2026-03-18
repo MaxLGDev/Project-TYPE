@@ -49,7 +49,8 @@ public class UIManager : MonoBehaviour
 
     private void HandleStateChanged(GameState state)
     {
-        if(state == GameState.InMatch)
+        Debug.Log($"UIManager HandleStateChanged: {state}");
+        if (state == GameState.InMatch)
         {
             transitionPanel.SetActive(false);
             matchEndedPanel.SetActive(false);
@@ -73,6 +74,7 @@ public class UIManager : MonoBehaviour
 
     private void HandleMatchEnd(PlayerID winner)
     {
+        Debug.Log("UIManager HandleMatchEnd called");
         UpdateRoundScore();
         UpdateMatchWinner(winner);
         ShowMatchHP();

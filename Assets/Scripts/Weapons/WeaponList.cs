@@ -6,7 +6,7 @@ public class WeaponList : MonoBehaviour
     [SerializeField] private WeaponDatabase weaponDB;
     [SerializeField] private GameObject weaponCardPrefab;
     [SerializeField] private Transform gridParent;
-
+ 
     private List<WeaponCard> spawnedCards = new List<WeaponCard>();
 
     private void Start()
@@ -27,6 +27,12 @@ public class WeaponList : MonoBehaviour
 
         foreach (WeaponCard card in spawnedCards)
             card.gameObject.SetActive(card.WeaponData.RarityTier == tier);
+    }
+
+    public void LockWeaponCards(bool locked)
+    {
+        foreach (WeaponCard card in spawnedCards)
+            card.SetLocked(locked);
     }
 
     public void ShowAll()

@@ -115,6 +115,7 @@ public class RoundManager : MonoBehaviour
 
     private void EndMatch(PlayerID winner)
     {
+        Debug.Log("EndMatch called, firing OnMatchEnded");
         if (GameManager.Instance.CurrentGameState == GameState.InMatch)
             OnMatchEnded?.Invoke(winner);
     }

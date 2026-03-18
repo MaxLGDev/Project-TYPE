@@ -12,22 +12,38 @@ public class WeaponSlotUI : MonoBehaviour
 
     private void Start()
     {
+        if(slotButton != null)
+            slotButton.interactable = false;
+
         ClearSlot();
-        slotButton.interactable = false;
     }
 
     public void SetWeapon(WeaponData data)
     {
         currentWeapon = data;
         weaponName.text = data.WeaponName;
-        slotButton.interactable = true;
+        if (slotButton != null)
+            slotButton.interactable = true;
+    }
+
+    public void SetLocked(bool locked)
+    {
+        if (slotButton != null)
+        {
+            if (!locked && currentWeapon != null)
+                slotButton.interactable = true;
+            else
+                slotButton.interactable = false;
+        }
     }
 
     public void ClearSlot()
     {
         currentWeapon = null;
         weaponName.text = string.Empty;
-        slotButton.interactable = false;
+
+        if (slotButton != null)
+            slotButton.interactable = false;
     }
 
     public void OnSlotClicked()

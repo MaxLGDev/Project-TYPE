@@ -3,14 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
+    public static SceneLoader Instance { get; private set; }
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void ReloadScene()
     {
         RoundManager.Instance.ResetMatch();
     }
 
-    public void LoadLoadoutScene()
+    public void LoadScene(string sceneName)
     {
-        GameManager.Instance.SetState(GameState.LoadoutWeapons);
-        SceneManager.LoadScene("LoadoutSelectionScene");
+        SceneManager.LoadScene(sceneName);
     }
 }

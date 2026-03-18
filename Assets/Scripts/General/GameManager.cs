@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public PlayerHealth P1Health => p1Health;
     [SerializeField] private CombatManager p1Combat;
     public CombatManager P1Combat => p1Combat;
+    public WeaponData[] P1SelectedWeapons { get; private set; }
 
     [Header("<color=white><size=20>Player 2</size></color>")]
     [SerializeField] private AIController aiController;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public PlayerHealth P2Health => p2Health;
     [SerializeField] private CombatManager p2Combat;
     public CombatManager P2Combat => p2Combat;
+    public WeaponData[] P2SelectedWeapons { get; private set; }
 
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty = AIDifficulty.Easy;
@@ -55,11 +57,24 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        SetState(GameState.InMatch);
+        SetState(GameState.MainMenu);
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "ArenaScene")
+            SetState(GameState.InMatch);
+
         if (RoundManager.Instance != null)
         {
             RoundManager.Instance.OnRoundEnded -= HandleRoundEnded;
@@ -67,13 +82,6 @@ public class GameManager : MonoBehaviour
             RoundManager.Instance.OnMatchEnded -= HandleMatchEnded;
             RoundManager.Instance.OnMatchEnded += HandleMatchEnded;
         }
-        else
-            Debug.LogError("RoundManager not found in GameManager Start!");
-    }
-
-    private void Update()
-    {
-        Debug.Log(CurrentGameState);
     }
 
     private void HandleRoundEnded(PlayerID id)
@@ -83,7 +91,18 @@ public class GameManager : MonoBehaviour
 
     private void HandleMatchEnded(PlayerID id)
     {
+        Debug.Log("HandleMatchEnded called");
         SetState(GameState.MatchOver);
+    }
+
+    public void SetP1Loadout(WeaponData[] loadout)
+    {
+        P1SelectedWeapons = loadout;
+    }
+
+    public void SetP2Loadout(WeaponData[] loadout)
+    {
+        P2SelectedWeapons = loadout;
     }
 
     public void SetState(GameState state)
@@ -93,6 +112,17 @@ public class GameManager : MonoBehaviour
 
         CurrentGameState = state;
         OnStateChanged?.Invoke(state);
+    }
+
+    public void StartMatch()
+    {
+        SceneLoader.Instance.LoadScene("ArenaScene");
+    }
+
+    public void PlayVSIA()
+    {
+        SetState(GameState.LoadoutWeapons);
+        SceneLoader.Instance.LoadScene("LoadoutSelectionScene");
     }
 
     public void PauseGame()

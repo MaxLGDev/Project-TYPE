@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponCard
   weaponName: {fileID: 8911086205854689323}
+  cardButton: {fileID: 2235515146196645318}
 --- !u!222 &366567722244984767
 CanvasRenderer:
   m_ObjectHideFlags: 0
