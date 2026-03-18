@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73b50c5691b94342b7f10df5f2d56bc, type: 3}
   m_Name: FlickerGun
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  WeaponName: FlickerGun
+  RarityTier: 1
+  WeaponName: FLICKER GUN
   minWordLength: 6
   maxWordLength: 9
   damagePerShot: 20

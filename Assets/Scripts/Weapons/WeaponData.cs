@@ -6,9 +6,17 @@ public enum SpecialEffect
     Flicker
 }
 
+public enum RarityTier
+{
+    Common,
+    Uncommon,
+    Rare
+}
+
 [CreateAssetMenu(fileName = "NewWeapon", menuName = "KEYSTRIKE/Weapon")]
 public class WeaponData : ScriptableObject
 {
+    public RarityTier RarityTier;
     public string WeaponName;
 
     public int minWordLength;

@@ -4,7 +4,9 @@ using UnityEngine.SceneManagement;
 public enum GameState
 {
     MainMenu,
-    Loadout,
+    LoadoutWeapons,
+    LoadoutSpecials,
+    LoadoutMap,
     PreMatch,
     InMatch,
     RoundTransition,
@@ -37,6 +39,9 @@ public class GameManager : MonoBehaviour
     public PlayerHealth P2Health => p2Health;
     [SerializeField] private CombatManager p2Combat;
     public CombatManager P2Combat => p2Combat;
+
+    public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
+    public AIDifficulty SelectedDifficulty = AIDifficulty.Easy;
 
     private void Awake()
     {
