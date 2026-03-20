@@ -32,6 +32,7 @@ public class AIController : MonoBehaviour
 
     private void Start()
     {
+        difficulty = GameManager.Instance.SelectedDifficulty;
         wpmSpeed = GetWPM();
         wordManager.GetNextWord();
 

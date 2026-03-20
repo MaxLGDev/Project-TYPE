@@ -977,63 +977,6 @@ RectTransform:
   m_AnchoredPosition: {x: -489, y: 467.84235}
   m_SizeDelta: {x: 650, y: 145.6847}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &371702974
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 371702975}
-  - component: {fileID: 371702976}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &371702975
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371702974}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 960, y: 510.627, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &371702976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371702974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8876638d7c6836648b31f70280d9337d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  transitionPanel: {fileID: 1753435255}
-  roundWinnerText: {fileID: 1958776711}
-  roundP1HPText: {fileID: 459787997}
-  roundP2HPText: {fileID: 224734582}
-  delayDuration: 3
-  matchEndedPanel: {fileID: 1317487526}
-  matchWinnerText: {fileID: 807543712}
-  matchP1HPText: {fileID: 1373848514}
-  matchP2HPText: {fileID: 1236995485}
-  roundScoreTexts:
-  - {fileID: 1396322640}
-  - {fileID: 1456994575}
-  - {fileID: 1668523283}
 --- !u!1 &423127401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,6 +2932,62 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: -0.000061035, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1361078516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361078518}
+  - component: {fileID: 1361078517}
+  m_Layer: 0
+  m_Name: ArenaUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1361078517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361078516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8876638d7c6836648b31f70280d9337d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArenaUIManager
+  transitionPanel: {fileID: 1753435255}
+  roundWinnerText: {fileID: 807543712}
+  roundP1HPText: {fileID: 459787997}
+  roundP2HPText: {fileID: 224734582}
+  delayDuration: 3
+  matchEndedPanel: {fileID: 1317487526}
+  matchWinnerText: {fileID: 807543712}
+  matchP1HPText: {fileID: 1373848514}
+  matchP2HPText: {fileID: 1236995485}
+  roundScoreTexts:
+  - {fileID: 1456994575}
+  - {fileID: 1456994575}
+--- !u!4 &1361078518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361078516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 837.6613, y: 514.72516, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367325586
 GameObject:
   m_ObjectHideFlags: 0
@@ -5158,7 +5157,7 @@ SceneRoots:
   - {fileID: 1023869162}
   - {fileID: 1123939229}
   - {fileID: 1223468745}
-  - {fileID: 371702975}
+  - {fileID: 1361078518}
   - {fileID: 2028086659}
   - {fileID: 672171772}
   - {fileID: 140168427}

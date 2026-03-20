@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public PowerData P2SelectedPower { get; private set; }
 
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
-    public AIDifficulty SelectedDifficulty = AIDifficulty.Easy;
+    public AIDifficulty SelectedDifficulty;
 
     private void Awake()
     {
@@ -131,10 +131,12 @@ public class GameManager : MonoBehaviour
         SceneLoader.Instance.LoadScene("ArenaScene");
     }
 
-    public void PlayVSIA()
+    public void PlayVSIA(int difficulty)
     {
+        SelectedDifficulty = (AIDifficulty)difficulty;
         SetState(GameState.LoadoutWeapons);
         SceneLoader.Instance.LoadScene("LoadoutSelectionScene");
+        Debug.Log(SelectedDifficulty);
     }
 
     public void PauseGame()

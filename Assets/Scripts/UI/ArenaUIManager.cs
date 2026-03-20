@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class ArenaUIManager : MonoBehaviour
 {
     [Header("Round Transition")]
     [SerializeField] private GameObject transitionPanel;
@@ -30,7 +30,10 @@ public class UIManager : MonoBehaviour
             RoundManager.Instance.OnMatchEnded += HandleMatchEnd;
         }
         else
+        {
             Debug.LogError("RoundManager not found in UIManager OnEnable!");
+            return;
+        }
 
         if (GameManager.Instance != null)
             GameManager.Instance.OnStateChanged += HandleStateChanged;

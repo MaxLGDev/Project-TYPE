@@ -11,7 +11,6 @@ public class PowerCard : MonoBehaviour
 
     public void Setup(PowerData data)
     {
-        Debug.Log($"Setup called, data null: {data == null}, powerName null: {powerName == null}");
         PowersData = data;
         powerName.text = data.PowerName;
     }
