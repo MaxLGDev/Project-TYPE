@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class LoadoutManager : MonoBehaviour
 {
+    public event System.Action<int> OnSlotSwitch;
+
     [SerializeField] private WordManager wordManager;
 
     public WeaponData[] equippedWeapons = new WeaponData[3];
@@ -21,6 +23,8 @@ public class LoadoutManager : MonoBehaviour
             wordManager.UpdateWordFilter(equippedWeapons[0].minWordLength, equippedWeapons[0].maxWordLength);
             wordManager.GetNextWord(); // first word called here, filter already set
         }
+
+        OnSlotSwitch?.Invoke(activeSlot);
     }
 
     private void AssignPlayerLoadout()
@@ -72,6 +76,8 @@ public class LoadoutManager : MonoBehaviour
 
         if (TypingInputHandler.Instance != null)
             TypingInputHandler.Instance.ResetTyping();
+
+        OnSlotSwitch?.Invoke(activeSlot);
     }
 
     private void CycleSlot() => SwitchToSlot((activeSlot + 1) % 3);
