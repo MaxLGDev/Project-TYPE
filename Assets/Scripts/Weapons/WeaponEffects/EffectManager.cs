@@ -27,6 +27,16 @@ public class EffectManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public void ApplyFlicker(PlayerID target)
     {
         TMP_Text targetText = target == PlayerID.Player1 ? p1DisplayText : p2DisplayText; 
@@ -48,5 +58,15 @@ public class EffectManager : MonoBehaviour
         }
 
         target.enabled = true;
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        if (scene.name == "ArenaScene")
+        {
+            // find the display texts by tag or name
+            p1DisplayText = GameObject.FindWithTag("WordDisplay/P1")?.GetComponent<TMP_Text>();
+            p2DisplayText = GameObject.FindWithTag("WordDisplay/P2")?.GetComponent<TMP_Text>();
+        }
     }
 }

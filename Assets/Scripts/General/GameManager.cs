@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty;
 
+    [Header("Main Menu Buttons")]
+    [SerializeField] private GameObject offlineMatchObject;
+    [SerializeField] private GameObject difficulties;
+    public GameObject OfflineMatchObject => offlineMatchObject;
+    public GameObject Difficulties => difficulties;
+
     [Header("Transitions")]
     [SerializeField] private GameObject startingSceneTransition;
     [SerializeField] private GameObject endingSceneTransition;
@@ -55,9 +61,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log($"GameManager Awake — Instance null: {Instance == null}, this == Instance: {Instance == this}");
+
         if (Instance != null && Instance != this)
         {
-            Debug.LogError("2 Game managers!");
+            Debug.Log($"Destroying duplicate. Existing instance: {Instance.gameObject.scene.name}");
             Destroy(gameObject);
             return;
         }
@@ -70,6 +78,9 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Instance != null && Instance != this) 
+            return;
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -143,6 +154,29 @@ public class GameManager : MonoBehaviour
         SetState(GameState.LoadoutWeapons);
         SceneLoader.Instance.LoadScene("LoadoutSelectionScene");
         Debug.Log(SelectedDifficulty);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SetState(GameState.MainMenu);
+        SceneLoader.Instance.LoadScene("MainMenuScene");
+    }
+
+    public void RestartMatchFromLoadout()
+    {
+        SetState(GameState.LoadoutWeapons);
+        SceneLoader.Instance.LoadScene("LoadoutSelectionScene");
+    }
+
+    public void RestartMatchNoLoadout()
+    {
+        SetState(GameState.RoundTransition);
+        SceneLoader.Instance.LoadScene("ArenaScene");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void PauseGame()

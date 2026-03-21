@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlayerWordManager
+  - WordManager/P1
+  - WordManager/P2
+  - WordDisplay/P1
+  - WordDisplay/P2
   layers:
   - Default
   - TransparentFX

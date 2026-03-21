@@ -135,6 +135,8 @@ public class TypingInputHandler : MonoBehaviour
     {
         typedSoFar = "";
         LastKeyWrong = false;
-        wordManager = GameObject.FindWithTag("PlayerWordManager").GetComponent<WordManager>();
+        GameObject wm = GameObject.FindWithTag("WordManager/P1");
+        if(wm != null)
+            wordManager = wm.GetComponent<WordManager>();
     }
 }

@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    [Header("Main Menu Buttons")]
     [SerializeField] private GameObject offlineMatchObject;
-
     [SerializeField] private GameObject difficulties;
 
     private void Start()
@@ -18,4 +17,6 @@ public class MainMenuUIManager : MonoBehaviour
         offlineMatchObject.SetActive(false);
         difficulties.SetActive(true);
     }
+
+    public void OnDifficultyClicked(int index) => GameManager.Instance.PlayVSIA(index);
 }
