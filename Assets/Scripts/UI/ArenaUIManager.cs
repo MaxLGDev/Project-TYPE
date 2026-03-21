@@ -25,7 +25,6 @@ public class ArenaUIManager : MonoBehaviour
     {
         if (RoundManager.Instance != null)
         {
-            Debug.Log("UIManager subscribed to RoundManager");
             RoundManager.Instance.OnRoundEnded += HandleRoundTransition;
             RoundManager.Instance.OnMatchEnded += HandleMatchEnd;
         }

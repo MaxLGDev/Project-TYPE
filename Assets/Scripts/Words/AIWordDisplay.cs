@@ -10,6 +10,13 @@ public class AIWordDisplay : MonoBehaviour
 
     private void Update()
     {
+        if(GameManager.Instance.CurrentGameState != GameState.InMatch)
+        {
+            displayText.enabled = false;
+            return;
+        }
+        displayText.enabled = true;
+
         string current = wordManager.CurrentWord;
         string typed = controller.AITypedSoFar;
 

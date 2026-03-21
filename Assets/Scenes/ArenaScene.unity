@@ -3047,6 +3047,8 @@ MonoBehaviour:
   p2Health: {fileID: 140168424}
   p2Combat: {fileID: 140168426}
   p2Power: {fileID: 140168431}
+  slowMoDuration: 1.5
+  lerpDuration: 0.2
 --- !u!1 &1200092394
 GameObject:
   m_ObjectHideFlags: 0
@@ -3882,6 +3884,7 @@ MonoBehaviour:
   matchP1HPText: {fileID: 1373848514}
   matchP2HPText: {fileID: 1236995485}
   roundScoreTexts:
+  - {fileID: 1396322640}
   - {fileID: 1456994575}
   - {fileID: 1668523283}
 --- !u!4 &1361078518

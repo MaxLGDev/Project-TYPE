@@ -31,6 +31,13 @@ public class WordDisplay : MonoBehaviour
 
     private void Update()
     {
+        if(GameManager.Instance.CurrentGameState != GameState.InMatch)
+        {
+            displayText.enabled = false;
+            return;
+        }
+        displayText.enabled = true;
+
         string current = wordManager.CurrentWord;
         string typed = TypingInputHandler.Instance.TypedSoFar;
         bool wrong = TypingInputHandler.Instance.ConsumeWrongKey();

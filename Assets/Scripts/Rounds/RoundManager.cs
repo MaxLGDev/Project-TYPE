@@ -1,5 +1,5 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class RoundManager : MonoBehaviour
 {
@@ -29,6 +29,11 @@ public class RoundManager : MonoBehaviour
     private PlayerID? firstToFire = null;
     private int roundCount = 1;
     public int RoundCount => roundCount;
+
+    [Header("SlowMo Details")]
+    [SerializeField] private float slowMoDuration = 0.5f;
+    [SerializeField] private float lerpDuration = 0.2f;
+    private Coroutine slowMoCO;
 
     private void Awake()
     {
@@ -80,7 +85,7 @@ public class RoundManager : MonoBehaviour
 
     private void EndRound(PlayerID winner)
     {
-        if (GameManager.Instance.CurrentGameState != GameState.InMatch)
+        if (GameManager.Instance.CurrentGameState != GameState.InMatch && GameManager.Instance.CurrentGameState != GameState.RoundTransition)
             return;
 
         if (winner == PlayerID.Player1)
@@ -123,7 +128,7 @@ public class RoundManager : MonoBehaviour
     private void EndMatch(PlayerID winner)
     {
         Debug.Log("EndMatch called, firing OnMatchEnded");
-        if (GameManager.Instance.CurrentGameState == GameState.InMatch)
+        if (GameManager.Instance.CurrentGameState == GameState.InMatch || GameManager.Instance.CurrentGameState == GameState.RoundTransition)
             OnMatchEnded?.Invoke(winner);
     }
 
@@ -144,15 +149,34 @@ public class RoundManager : MonoBehaviour
 
     private void HandleEndRound()
     {
-        if (p1Health.CurrentHP <= 0)
-            EndRound(PlayerID.Player2);
-        else if (p2Health.CurrentHP <= 0)
-            EndRound(PlayerID.Player1);
+        PlayerID winner = p1Health.CurrentHP <= 0 ? PlayerID.Player2 : PlayerID.Player1;
+        if (slowMoCO != null)
+            StopCoroutine(slowMoCO);
+
+        slowMoCO = StartCoroutine(SlowMoCO(winner));
     }
 
     private void HandleWeaponFired(PlayerID player)
     {
         if (firstToFire == null)
             firstToFire = player;
+    }
+
+    private IEnumerator SlowMoCO(PlayerID winner)
+    {
+        GameManager.Instance.SetState(GameState.RoundTransition);
+
+        float elapsed = 0f;
+
+        while(elapsed <= lerpDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            Time.timeScale = Mathf.Lerp(1f, 0.2f, elapsed / lerpDuration);
+            yield return null;
+        }
+        yield return new WaitForSecondsRealtime(slowMoDuration);
+        Time.timeScale = 1f;
+
+        EndRound(winner);
     }
 }
