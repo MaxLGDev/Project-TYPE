@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty;
 
+    [Header("Transitions")]
+    [SerializeField] private GameObject startingSceneTransition;
+    [SerializeField] private GameObject endingSceneTransition;
+    public GameObject StartingSceneTransition => startingSceneTransition;
+    public GameObject EndingSceneTransition => endingSceneTransition;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
