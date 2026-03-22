@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty;
 
-    
+    [Header("Maps")]
+    public MapData SelectedMap { get; private set; }
 
     [Header("Transitions")]
     [SerializeField] private GameObject startingSceneTransition;
@@ -105,6 +106,14 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("HandleMatchEnded called");
         SetState(GameState.MatchOver);
+    }
+
+    public void SetSelectedMap(MapData map)
+    {
+        if (SelectedMap == map)
+            return;
+
+        SelectedMap = map;
     }
 
     public void SetP1Loadout(WeaponData[] loadout)

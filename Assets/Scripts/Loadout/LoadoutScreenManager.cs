@@ -11,6 +11,7 @@ public class LoadoutScreenManager : MonoBehaviour
     [SerializeField] private WeaponList weaponList;
     [SerializeField] private PowerList powerList;
     [SerializeField] private WeaponDatabase weaponDatabase;
+    [SerializeField] private MapDatabase mapDatabase;
 
     [SerializeField] private WeaponData aiDefaultWeapon;
 
@@ -57,6 +58,8 @@ public class LoadoutScreenManager : MonoBehaviour
         // TODO: REPLACE WITH ACTUAL AI LOADOUT FROM DIFFICULTY SETTINGS
         GameManager.Instance.SetP2Loadout(new WeaponData[] {aiDefaultWeapon, aiDefaultWeapon, aiDefaultWeapon});
         GameManager.Instance.SetP2Power(null);
+
+        GameManager.Instance.SetSelectedMap(mapDatabase.maps[0]);
     }
 
     private void OnEnable()
