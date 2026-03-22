@@ -38,6 +38,7 @@ public class MapSelector : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.SetSelectedMap(mapDatabase.maps[0]);
+        mapNameText.text = mapDatabase.maps[currentIndex].mapName;
         UpdateDisplay();
     }
 
