@@ -42,5 +42,8 @@ public class SceneLoader : MonoBehaviour
         GameManager.Instance.StartingSceneTransition.SetActive(true);
         yield return new WaitForSeconds(duration);
         GameManager.Instance.StartingSceneTransition.SetActive(false);
+
+        if (sceneName == "ArenaScene")
+            GameManager.Instance.SetState(GameState.PreRound);
     }
 }

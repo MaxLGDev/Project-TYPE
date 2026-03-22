@@ -4,6 +4,7 @@ public class MatchStarter : MonoBehaviour
 {
     public void StartMatch()
     {
+        GameManager.Instance.SetState(GameState.PreRound);
         RoundManager.Instance.ResetMatch();
     }
 

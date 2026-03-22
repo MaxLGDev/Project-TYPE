@@ -91,8 +91,9 @@ public class ArenaUIManager : MonoBehaviour
 
         if (GameManager.Instance.CurrentGameState != GameState.MatchOver)
         {
+            transitionPanel.SetActive(false);
             RoundManager.Instance.StartNextRound();
-            GameManager.Instance.SetState(GameState.InMatch);
+            GameManager.Instance.SetState(GameState.PreRound);
         }
     }
 

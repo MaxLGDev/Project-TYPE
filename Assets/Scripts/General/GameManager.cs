@@ -7,7 +7,7 @@ public enum GameState
     LoadoutWeapons,
     LoadoutPowers,
     LoadoutMap,
-    PreMatch,
+    PreRound,
     InMatch,
     RoundTransition,
     MatchOver
@@ -47,11 +47,7 @@ public class GameManager : MonoBehaviour
     public WeaponData[] PlayerSelectedLoadout = new WeaponData[3];
     public AIDifficulty SelectedDifficulty;
 
-    [Header("Main Menu Buttons")]
-    [SerializeField] private GameObject offlineMatchObject;
-    [SerializeField] private GameObject difficulties;
-    public GameObject OfflineMatchObject => offlineMatchObject;
-    public GameObject Difficulties => difficulties;
+    
 
     [Header("Transitions")]
     [SerializeField] private GameObject startingSceneTransition;
@@ -91,9 +87,6 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "ArenaScene")
-            SetState(GameState.InMatch);
-
         if (RoundManager.Instance != null)
         {
             RoundManager.Instance.OnRoundEnded -= HandleRoundEnded;
@@ -177,15 +170,5 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-    }
-
-    public void PauseGame()
-    {
-        SetState(GameState.RoundTransition);
-    }
-
-    public void ResumeGame()
-    {
-        SetState(GameState.InMatch);
     }
 }
