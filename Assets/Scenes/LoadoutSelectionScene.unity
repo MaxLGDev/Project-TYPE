@@ -883,7 +883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &97235801
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2570,6 +2570,7 @@ GameObject:
   - component: {fileID: 540037411}
   - component: {fileID: 540037410}
   - component: {fileID: 540037412}
+  - component: {fileID: 540037413}
   m_Layer: 5
   m_Name: LeftMapPreview
   m_TagString: Untagged
@@ -2690,6 +2691,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &540037413
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540037408}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &551369514
 GameObject:
   m_ObjectHideFlags: 0
@@ -6483,6 +6496,35 @@ MonoBehaviour:
   leftPreview: {fileID: 540037410}
   centerPreview: {fileID: 1795631913}
   rightPreview: {fileID: 1875695794}
+  leftExitState:
+    position: {x: -600, y: 0}
+    scale: 0.5
+    alpha: 0
+  leftState:
+    position: {x: -300, y: -50}
+    scale: 1
+    alpha: 0.95
+  centerState:
+    position: {x: 0, y: -50}
+    scale: 1
+    alpha: 1
+  rightState:
+    position: {x: 300, y: -50}
+    scale: 1
+    alpha: 0.95
+  rightExitState:
+    position: {x: 600, y: 0}
+    scale: 0.5
+    alpha: 0
+  lerpDuration: 0.5
+  previewsRects:
+  - {fileID: 540037409}
+  - {fileID: 1795631912}
+  - {fileID: 1875695793}
+  canvasGroups:
+  - {fileID: 540037413}
+  - {fileID: 1795631915}
+  - {fileID: 1875695797}
 --- !u!4 &1773445688
 Transform:
   m_ObjectHideFlags: 0
@@ -6509,6 +6551,7 @@ GameObject:
   - component: {fileID: 1795631912}
   - component: {fileID: 1795631914}
   - component: {fileID: 1795631913}
+  - component: {fileID: 1795631915}
   m_Layer: 5
   m_Name: CenterMapPreview
   m_TagString: Untagged
@@ -6573,6 +6616,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795631911}
   m_CullTransparentMesh: 1
+--- !u!225 &1795631915
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795631911}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1817707006
 GameObject:
   m_ObjectHideFlags: 0
@@ -6722,6 +6777,7 @@ GameObject:
   - component: {fileID: 1875695795}
   - component: {fileID: 1875695794}
   - component: {fileID: 1875695796}
+  - component: {fileID: 1875695797}
   m_Layer: 5
   m_Name: RightMapPreview
   m_TagString: Untagged
@@ -6842,6 +6898,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!225 &1875695797
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875695792}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1891538856
 GameObject:
   m_ObjectHideFlags: 0
