@@ -10,6 +10,7 @@ public class LoadoutScreenManager : MonoBehaviour
     [SerializeField] private LoadoutTimer loadoutTimer;
     [SerializeField] private WeaponList weaponList;
     [SerializeField] private PowerList powerList;
+    [SerializeField] private WeaponDatabase weaponDatabase;
 
     [SerializeField] private WeaponData aiDefaultWeapon;
 
@@ -71,14 +72,27 @@ public class LoadoutScreenManager : MonoBehaviour
     private void OnTimerExpired()
     {
         p1Locked = true;
+        p2Locked = true;
         HandleNextPhase();
     }
 
     private void HandleNextPhase()
     {
+
+        for(int i = 0; i < p1WeaponSlots.Length; i++)
+        {
+            if (p1Weapons[i] == null)
+            {
+                p1Weapons[i] = weaponDatabase.weapons[Random.Range(0, weaponDatabase.weapons.Count)];
+                p1WeaponSlots[i].SetWeapon(p1Weapons[i]);
+            }
+        }
+
         // TODO: check P2 lock state when multiplayer is added
         if (GameManager.Instance.CurrentGameState == GameState.LoadoutWeapons && BothPlayersReady())
         {
+            Debug.Log("Advancing to LoadoutPowers");
+            GameManager.Instance.SetP1Loadout(p1Weapons);
             p1Locked = false;
             p2Locked= true;
             UpdateLockButton();

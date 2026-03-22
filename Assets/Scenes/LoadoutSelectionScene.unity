@@ -2801,6 +2801,7 @@ MonoBehaviour:
   loadoutTimer: {fileID: 829052661}
   weaponList: {fileID: 594737023}
   powerList: {fileID: 594737024}
+  weaponDatabase: {fileID: 11400000, guid: ba6024d1057f5814e8d51d012ed85a45, type: 2}
   aiDefaultWeapon: {fileID: 11400000, guid: 2c81d40ae34f29f43bdd3ad099b4e46e, type: 2}
   availablePowers:
   - {fileID: 11400000, guid: 36c908a95a62af145ab20cfa3213b7a0, type: 2}

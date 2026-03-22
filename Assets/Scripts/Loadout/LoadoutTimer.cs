@@ -44,7 +44,7 @@ public class LoadoutTimer : MonoBehaviour
 
     private void HandlePhaseChanged(GameState state)
     {
-        if(state == GameState.LoadoutWeapons || state == GameState.LoadoutPowers || state == GameState.LoadoutMap)
+        if (state == GameState.LoadoutWeapons || state == GameState.LoadoutPowers || state == GameState.LoadoutMap)
             ResetTimer();
     }
 
@@ -64,8 +64,8 @@ public class LoadoutTimer : MonoBehaviour
 
         if (timeRemaining <= 0)
         {
-            OnTimerExpired?.Invoke();
             timerExpired = true;
+            OnTimerExpired?.Invoke();
         }
     }
 
@@ -93,5 +93,7 @@ public class LoadoutTimer : MonoBehaviour
         currentState = GameManager.Instance.CurrentGameState;
         timeRemaining = GetTimerDuration();
         timerExpired = false;
+        Debug.Log($"ResetTimer — state: {currentState}, duration: {timeRemaining}");
+
     }
 }
