@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FilmStripSelector : MonoBehaviour
 {
+    public static FilmStripSelector Instance { get; private set; }
+
     [SerializeField] private MapDatabase mapDatabase;
     [SerializeField] private TMP_Text mapNameText;
     [SerializeField] private RectTransform contentStrip;
@@ -16,11 +18,23 @@ public class FilmStripSelector : MonoBehaviour
 
     private Vector2 startPos = new Vector2(200f, 0f);
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         currentIndex = 0;
         contentStrip.anchoredPosition = startPos;
         UpdateUI();
+    }
+
+    public void SelectMap(int index)
+    {
+        if (isAnimating || index == currentIndex) return;
+        currentIndex = index;
+        StartCoroutine(SlideCo());
     }
 
     public void NextMap()
