@@ -14,6 +14,10 @@ public class NarrativeOpponentData : ScriptableObject
     public WeaponData[] loadoutSlots;
     public AIDifficulty aiDifficultyLevel;
 
+    [Header("Dialogue")]
+    public DialogueLineData[] preMatchLines;
+    public DialogueLineData[] postMatchLines;
+
     //[Header("Dialogue Infos")]
     //public DialogueLine[] preMatchLines;
     //public DialogueLine[] postLossLines;
