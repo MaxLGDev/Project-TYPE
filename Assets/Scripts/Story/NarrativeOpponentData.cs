@@ -1,30 +1,26 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Opponent", menuName = ("KEYSTRIKE/Opponents"))]
+[CreateAssetMenu(fileName = "New Opponent", menuName = ("KEYSTRIKE/Dialogues/Opponents"))]
 public class NarrativeOpponentData : ScriptableObject
 {
     [Header("Opponent Infos")]
-    public string opponentName;
+    public string OpponentName;
 
     [Header("Story Position")]
-    public StoryAct act;
-    public int matchIndex;
+    public StoryAct Act;
+    public int MatchIndex;
 
     [Header("Loadout Infos")]
-    public WeaponData[] loadoutSlots;
-    public AIDifficulty aiDifficultyLevel;
+    public WeaponData[] LoadoutSlots;
+    public AIDifficulty AiDifficultyLevel;
 
     [Header("Dialogue")]
-    public DialogueLineData[] preMatchLines;
-    public DialogueLineData[] postMatchLines;
-
-    //[Header("Dialogue Infos")]
-    //public DialogueLine[] preMatchLines;
-    //public DialogueLine[] postLossLines;
+    public DialogueLineData[] PreMatchLines;
+    public DialogueLineData[] PostMatchLines;
     //public string[] foreshadowingFlags;
 
     public bool MatchesCurrentState(StoryAct currentAct, int currentMatchIndex)
     {
-        return act == currentAct && matchIndex == currentMatchIndex;
+        return Act == currentAct && MatchIndex == currentMatchIndex;
     }
 }

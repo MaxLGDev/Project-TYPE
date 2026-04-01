@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public event System.Action<GameState> OnStateChanged;
+    public event Action<DialogueLineData[], Action> OnPreMatchDialogueRequested;
+    public event Action<DialogueLineData[], Action> OnPostMatchDialogueRequested;
+
     public GameState CurrentGameState { get; private set; }
 
     [Header("<color=white><size=20>Player 1</size></color>")]
@@ -75,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (Instance != null && Instance != this) 
+        if (Instance != null && Instance != this)
             return;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -104,8 +108,36 @@ public class GameManager : MonoBehaviour
 
     private void HandleMatchEnded(PlayerID id)
     {
-        Debug.Log("HandleMatchEnded called");
-        SetState(GameState.MatchOver);
+        if (StoryManager.Instance != null && StoryManager.Instance.IsStoryMode())
+        {
+            if (id == PlayerID.Player1)
+            {
+                NarrativeOpponentData opponent = StoryManager.Instance.GetCurrentOpponent();
+
+                if (opponent != null)
+                {
+                    OnPostMatchDialogueRequested?.Invoke(opponent.PostMatchLines, () =>
+                    {
+                        StoryManager.Instance.AdvanceMatchIndex();
+                        SceneLoader.Instance.LoadScene("MainMenuScene");
+                    });
+                }
+                else
+                {
+                    Debug.LogWarning("No opponent data found");
+                    SetState(GameState.MatchOver);
+                }
+            }
+            else
+            {
+                SetState(GameState.MatchOver);
+            }
+        }
+        else
+        {
+            Debug.Log("HandleMatchEnded called");
+            SetState(GameState.MatchOver);
+        }
     }
 
     public void SetSelectedMap(MapData map)
@@ -147,7 +179,25 @@ public class GameManager : MonoBehaviour
 
     public void StartMatch()
     {
-        SceneLoader.Instance.LoadScene("ArenaScene");
+        if (StoryManager.Instance != null && StoryManager.Instance.IsStoryMode())
+        {
+            NarrativeOpponentData opponent = StoryManager.Instance.GetCurrentOpponent();
+
+            if (opponent != null)
+            {
+                OnPreMatchDialogueRequested?.Invoke(opponent.PreMatchLines, () =>
+                {
+                    SceneLoader.Instance.LoadScene("ArenaScene");
+                });
+            }
+            else
+            {
+                Debug.LogWarning("No opponent data found, loading arena");
+                SceneLoader.Instance.LoadScene("ArenaScene");
+            }
+        }
+        else
+            SceneLoader.Instance.LoadScene("ArenaScene");
     }
 
     public void PlayVSIA(int difficulty)

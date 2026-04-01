@@ -19,8 +19,13 @@ public class StoryManager : MonoBehaviour
     public event Action<StoryAct> OnActChanged;
     public event Action OnStoryComplete;
 
+    [Header("Opponents")]
+    [SerializeField] private NarrativeOpponentData[] allOpponents;
+
     [Header("Acts Triggers")]
     private StoryAct currentAct = StoryAct.None;
+    [SerializeField] private int act1MatchCount;
+    [SerializeField] private int act3MatchCount;
     private int act1MatchIndex;
     private int act3MatchIndex;
     private bool act4Triggered;
@@ -38,6 +43,47 @@ public class StoryManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         LoadProgress();
+    }
+
+    public NarrativeOpponentData GetCurrentOpponent()
+    {
+        foreach(NarrativeOpponentData opponent in allOpponents)
+        {
+            if (opponent.MatchesCurrentState(currentAct, GetCurrentMatchIndex()))
+                return opponent;
+        }
+
+        Debug.LogWarning("No opponent found");
+        return null;
+    }
+
+    private int GetCurrentMatchIndex()
+    {
+        if (currentAct == StoryAct.Act1)
+            return act1MatchIndex;
+
+        if (currentAct == StoryAct.Act3)
+            return act3MatchIndex;
+
+        return 0;
+    }
+
+    public void AdvanceMatchIndex()
+    {
+        if(currentAct == StoryAct.Act1)
+        {
+            act1MatchIndex++;
+            if (act1MatchIndex >= act1MatchCount)
+                AdvanceAct();
+        }
+        else if(currentAct == StoryAct.Act3)
+        {
+            act3MatchIndex++;
+            if (act3MatchIndex >= act3MatchCount)
+                AdvanceAct();
+        }
+
+        StorySaveSystem.Save(this);
     }
 
     public void AdvanceAct()

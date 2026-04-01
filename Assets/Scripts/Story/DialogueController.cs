@@ -5,6 +5,8 @@ using TMPro;
 
 public class DialogueController : MonoBehaviour
 {
+    private GameManager gameManager;
+
     [Header("Dialogue UI References")]
     [SerializeField] private TMP_Text speakerNameText;
     [SerializeField] private TMP_Text dialogueText;
@@ -16,6 +18,23 @@ public class DialogueController : MonoBehaviour
 
     private bool skipRequested;
     private Coroutine activeSequence;
+
+    private void Awake()
+    {
+        gameManager = GetComponent<GameManager>();
+    }
+
+    private void OnEnable()
+    {
+        gameManager.OnPreMatchDialogueRequested += PlaySequence;
+        gameManager.OnPostMatchDialogueRequested += PlaySequence;
+    }
+
+    private void OnDisable()
+    {
+        gameManager.OnPreMatchDialogueRequested -= PlaySequence;
+        gameManager.OnPostMatchDialogueRequested -= PlaySequence;
+    }
 
     private void Update()
     {
